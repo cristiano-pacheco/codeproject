@@ -3,10 +3,11 @@ namespace CodeProject\Services;
 
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Validators\ProjectValidator;
-use Prettus\Validator\Exceptions\ValidatorException;
+use CodeProject\Traits\crudServiceTrait;
 
 class ProjectService
 {
+    use crudServiceTrait;
     /**
      * 
      * @var ClientRepository
@@ -25,64 +26,54 @@ class ProjectService
         $this->validator = $validator;
     }
     
-    public function create(array $data)
+    public function addMember($idProject, $idUser)
     {
         try {
-            $this->validator->with($data)->passesOrFail();
-            return $this->repository->create($data);
-        }catch (ValidatorException $e)
-        {
+            $this->repository->find($idProject)->members()->attach($idUser);
             return [
-                'error'=>true, 
-                'message'=>$e->getMessageBag()
+                'error' => false,
+                'message' => 'Membro adicionado com sucesso.'
             ];
-        }
-        
-    }
     
-    public function update(array $data, $id)
-    {
-        try {
-            $this->validator->with($data)->passesOrFail();
-            return $this->repository->update($data,$id);
-        }catch (ValidatorException $e)
-        {
-            return [
-                'error'=>true,
-                'message'=>$e->getMessageBag()
-            ];
-        }
-        
-    }
-    
-    public function showOne($id)
-    {
-        try {
-            return $this->repository->find($id);
-        } catch (\Exception $e) {
+        } catch (\Exception $e){
             return [
                 'error' => true,
-                'message' => 'Registro não encontrado.'
+                'message' => $e->getMessage()
             ];
-        }    
+        }
     }
     
-    public function delete($id)
+    public function removeMember($idProject, $idUser)
     {
         try {
-            if($this->repository->find($id)->delete()){
-                return [
-                    'error' => false,
-                    'message' => 'Registro deletado com sucesso.'
-                ];
+            $this->repository->find($idProject)->members()->detach($idUser);
+             
+            return [
+                'error' => false,
+                'message' => 'Membro removido com sucesso.'
+            ];
+    
+        } catch (\Exception $e){
+            return [
+                'error' => true,
+                'message' => $e->getMessage()
+            ];
+        }
+    }
+    
+    public function isMember($id,$idUser)
+    {
+        $members =  $this->repository->find($id)->members;
+        foreach($members as $member){
+            if($member->id == $idUser){
+                return true;
             }
-        } catch (\Exception $e) {
-            return [
-                'error' => true,
-                'message' => 'Não foi possivel deletar o registro.'
-            ];
         }
+        return false;
     }
     
-    
+    public function getMembers($id)
+    {
+        return $this->repository->find($id)->members;
+    }
 }

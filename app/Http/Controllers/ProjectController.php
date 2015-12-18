@@ -2,44 +2,41 @@
 
 namespace CodeProject\Http\Controllers;
 
-use Illuminate\Http\Request;
 use CodeProject\Http\Controllers\Controller;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Services\ProjectService;
+use CodeProject\Traits\crudControllerTrait;
 
 class ProjectController extends Controller
 {
     private $repository;
     private $service;
     
+    use crudControllerTrait;
+    
     public function __construct(ProjectRepository $repository, ProjectService $service)
     {
         $this->repository = $repository;
         $this->service = $service;
     }
-
-    public function index()
+    
+    public function addMember($id, $idMember)
     {
-        return $this->repository->with(['client','owner'])->all();
-    }
-
-    public function store(Request $request)
-    {
-        return $this->service->create($request->all());
-    }
-
-    public function show($id)
-    {
-        return $this->service->showOne($id);
+       return $this->service->addMember($id,$idMember);
     }
     
-    public function update(Request $request, $id)
+    public function removeMember($id, $idMember)
     {
-        return $this->service->update($request->all(),$id);
+        return $this->service->removeMember($id,$idMember);
     }
-
-    public function destroy($id)
+    
+    public function members($id)
     {
-        return $this->service->delete($id);
+        return $this->service->getMembers($id);
+    }
+    
+    public function isMember($id, $idMember)
+    {
+        return $this->service->isMember($id,$idMember);
     }
 }

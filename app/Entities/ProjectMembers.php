@@ -12,10 +12,10 @@ class ProjectMembers extends Model implements Transformable
 
     protected $fillable = [
         'project_id',
-        'user_id'
+        'member_id'
     ];
     
-    public function user()
+    public function member()
     {
         return $this->belongsTo('CodeProject\Entities\User');
     }

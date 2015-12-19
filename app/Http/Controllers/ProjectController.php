@@ -2,10 +2,10 @@
 
 namespace CodeProject\Http\Controllers;
 
+use Illuminate\Http\Request;
 use CodeProject\Http\Controllers\Controller;
 use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Services\ProjectService;
-use CodeProject\Traits\crudControllerTrait;
 
 class ProjectController extends Controller
 {

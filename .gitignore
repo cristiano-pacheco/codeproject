@@ -7,7 +7,7 @@ Homestead.json
 .project
 .settings/
 node_modules/
-resources/bower_components
-public/build
-public/css
-public/js
+resources/bower_components/
+public/build/
+public/css/
+public/js/

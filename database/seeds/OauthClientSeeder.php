@@ -12,6 +12,6 @@ class OauthClientSeeder extends Seeder
     public function run()
     {
         \DB::insert("insert into oauth_clients (id, secret,name,created_at,updated_at) values(?,?,?,?,?)",
-            ['appid01','secret','AngularApp',"now()","now()"]);
+            ['appid1','secret','AngularApp',"now()","now()"]);
     }
 }

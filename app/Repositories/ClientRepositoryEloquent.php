@@ -32,8 +32,8 @@ class ClientRepositoryEloquent extends BaseRepository implements ClientRepositor
         $this->pushCriteria(app(RequestCriteria::class));
     }
     
-    public function presenter()
-    {
-        return ClientPresenter::class;
-    }
+//     public function presenter()
+//     {
+//         return ClientPresenter::class;
+//     }
 }

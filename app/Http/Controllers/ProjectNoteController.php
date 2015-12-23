@@ -33,7 +33,7 @@ class ProjectNoteController extends Controller
         return $this->service->show($id,$noteId);
     }
     
-    public function update(Request $request, $id, $noteId)
+    public function update(Request $request, $noteId)
     {
         return $this->service->update($request->all(),$noteId);
     }

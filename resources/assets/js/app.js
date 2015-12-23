@@ -63,7 +63,7 @@ app.config([
 				templateUrl: 'build/views/project-note/list.html',
 				controller: 'ProjectNoteListController'
 			})
-			.when('/project/:id/notes/:idNote',{
+			.when('/project/:id/notes/:idNote/show',{
 				templateUrl: 'build/views/project-note/show.html',
 				controller: 'ProjectNoteShowController'
 			})
@@ -75,7 +75,7 @@ app.config([
 				templateUrl: 'build/views/project-note/edit.html',
 				controller: 'ProjectNoteEditController'
 			})
-			.when('/project/:id/notes/:idNote/edit',{
+			.when('/project/:id/notes/:idNote/remove',{
 				templateUrl: 'build/views/project-note/remove.html',
 				controller: 'ProjectNoteRemoveController'
 			});

@@ -60,7 +60,13 @@ class ProjectNoteService
     public function show($id,$noteId)
     {
         try {
-            return $this->repository->findWhere(['project_id'=>$id,'id'=>$noteId]);
+            
+            $data = $this->repository->findWhere(['project_id'=>$id,'id'=>$noteId]);
+            $result['data'] = '';
+            if(isset($data['data'][0]) && count($data['data'][0])){
+                $result['data'] = $data['data'][0];
+            }
+            return $result;
         } catch (\Exception $e) {
             return [
                 'error' => true,
@@ -69,10 +75,11 @@ class ProjectNoteService
         }    
     }
     
-    public function delete($noteId)
+    public function delete($id)
     {
         try {
-            if($this->repository->find($noteId)->delete()){
+            
+            if($this->repository->delete($id)){
                 return [
                     'error' => false,
                     'message' => 'Registro deletado com sucesso.'

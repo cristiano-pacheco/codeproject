@@ -10,8 +10,10 @@ class ProjectTransformer extends TransformerAbstract
     public function transform(Project $project)
     {
         return [
-            'project_id'  => $project->id,
+            'id'  => $project->id,
             'client_id'   => $project->client_id,
+            'client_name' => $project->client->name,
+            'name'        => $project->name,
             'owner_id'    => $project->owner_id,
             'project'     => $project->name,
             'description' => $project->description,
@@ -25,4 +27,9 @@ class ProjectTransformer extends TransformerAbstract
     {
         return $this->collection($project->members, new ProjectMemberTransformer());
     }
+    
+//     public function includeClient(Project $project)
+//     {
+//         return $this->collection($project->client, new ClientTransformer());
+//     }
 }

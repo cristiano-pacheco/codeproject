@@ -47,7 +47,7 @@ trait crudServiceTrait
     public function delete($id)
     {
         try {
-            if($this->repository->find($id)->delete()){
+            if($this->repository->delete($id)){
                 return [
                     'error' => false,
                     'message' => 'Registro deletado com sucesso.'

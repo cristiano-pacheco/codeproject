@@ -80,20 +80,32 @@
         
         <script src="{{ asset('build/js/app.js') }}"></script>
         
+        <!-- Filters -->
+        <script src="{{ asset('build/js/filters/date-br.js') }}"></script>
+        
         <!-- Serviços -->
         <script src="{{ asset('build/js/services/client.js') }}"></script>
         <script src="{{ asset('build/js/services/projectNote.js') }}"></script>
         <script src="{{ asset('build/js/services/user.js') }}"></script>
+        <script src="{{ asset('build/js/services/project.js') }}"></script>
         
         <!-- Controllers -->
         <script src="{{ asset('build/js/controllers/login.js') }}"></script>
         <script src="{{ asset('build/js/controllers/home.js') }}"></script>
         
+        <!-- Cliente -->
         <script src="{{ asset('build/js/controllers/client/clientList.js') }}"></script>
         <script src="{{ asset('build/js/controllers/client/clientNew.js') }}"></script>
         <script src="{{ asset('build/js/controllers/client/clientEdit.js') }}"></script>
         <script src="{{ asset('build/js/controllers/client/clientRemove.js') }}"></script>
         
+        <!-- Project -->
+        <script src="{{ asset('build/js/controllers/project/projectList.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/project/projectNew.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/project/projectEdit.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/project/projectRemove.js') }}"></script>
+        
+        <!-- ProjectNote -->
         <script src="{{ asset('build/js/controllers/project-note/projectNoteList.js') }}"></script>
         <script src="{{ asset('build/js/controllers/project-note/projectNoteNew.js') }}"></script>
         <script src="{{ asset('build/js/controllers/project-note/projectNoteEdit.js') }}"></script>

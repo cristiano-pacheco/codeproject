@@ -1,4 +1,7 @@
-var app = angular.module('app',['ngRoute','angular-oauth2','app.controllers','app.services','app.filters']);
+var app = angular.module('app',[
+   'ngRoute','angular-oauth2','app.controllers','app.services','app.filters',
+   'ui.bootstrap.typeahead','ui.bootstrap.datepicker','ui.bootstrap.tpls'
+ ]);
 
 angular.module('app.controllers',['ngMessages','angular-oauth2']);
 angular.module('app.filters',[]);

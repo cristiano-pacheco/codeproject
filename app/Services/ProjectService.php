@@ -86,39 +86,23 @@ class ProjectService
         return $this->repository->find($id)->members;
     }
     
-    public function createFile(array $data)
+    private function checkProjectOwner($projectId)
     {
-        $project = $this->repository->skipPresenter()->find($data['project_id']);
-        $projectFile = $project->files()->create($data);
-        
-        $this->storage->put($projectFile->id.'.'.$data['extension'], $this->filesystem->get($data['file']));
+        $userId =  \Authorizer::getResourceOwnerId();
+        return $this->repository->isOwner($projectId,$userId);
     }
     
-    public function destroyImage($idProject, $idFile)
+    private function checkProjectMember($projectId)
     {
-        try{
+        $userId =  \Authorizer::getResourceOwnerId();
+        return $this->repository->hasMember($projectId,$userId);
+    }
     
-            $project = $this->repository->skipPresenter()->find($idProject);
-            $img = $project->files()->find($idFile);
-    
-            if(file_exists(storage_path().'/app/'.$img->id.'.'.$img->extension)){
-                $this->storage->delete($img->id.'.'.$img->extension);
-            }
-    
-            $img->delete();
-    
-            return [
-                'error' => false,
-                'message' => 'Arquivo deletado com sucesso.'
-            ];
-    
-        }catch (\Exception $e){
-    
-            return [
-                'error' => true,
-                'message' => $e->getMessage()
-            ];
+    private function checkProjectPermissions($projectId)
+    {
+        if($this->checkProjectOwner($projectId) || $this->checkProjectMember($projectId)){
+            return true;
         }
-    
+        return false;
     }
 }

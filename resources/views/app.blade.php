@@ -123,7 +123,6 @@
         <script src="{{ asset('build/js/controllers/project-file/projectFileNew.js') }}"></script>
         <script src="{{ asset('build/js/controllers/project-file/projectFileEdit.js') }}"></script>
         <script src="{{ asset('build/js/controllers/project-file/projectFileRemove.js') }}"></script>
-        <script src="{{ asset('build/js/controllers/project-file/projectFileShow.js') }}"></script>
         
     @else
         <script src="{{elixir('js/all.js')}}"></script>

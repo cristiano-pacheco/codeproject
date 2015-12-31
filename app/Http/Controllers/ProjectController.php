@@ -16,11 +16,14 @@ class ProjectController extends Controller
     {
         $this->repository = $repository;
         $this->service = $service;
+        
+        $this->middleware('check.project.owner',['except'=> ['store','show','index']]);
+        $this->middleware('check.project.permission',['except'=> ['index','store','update','destroy']]);
     }
     
     public function index()
     {
-        return $this->repository->findWhere(['owner_id'=>\Authorizer::getResourceOwnerId()]);
+        return $this->repository->findWithOwnerAndMember(\Authorizer::getResourceOwnerId());
     }
     
     public function store(Request $request)
@@ -30,26 +33,16 @@ class ProjectController extends Controller
     
     public function show($id)
     {
-        if($this->service->checkProjectPermissions($id)== false){
-            return ['error'=>'Access forbidden'];
-        }
         return $this->service->show($id);
     }
     
     public function update(Request $request, $id)
     {
-        if($this->service->checkProjectPermissions($id)== false){
-            return ['error'=>'Access forbidden'];
-        }
         return $this->service->update($request->all(),$id);
     }
     
     public function destroy($id)
-    {
-        if($this->service->checkProjectPermissions($id)== false){
-            return ['error'=>'Access forbidden'];
-        }
-        
+    {        
         return $this->service->delete($id);
     }
     

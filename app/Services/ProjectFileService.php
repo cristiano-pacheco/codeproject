@@ -88,57 +88,7 @@ class ProjectFileService
                 return $this->storage->getDriver()->getAdapter()->getPathPrefix().'/'.$projectFile->getFileName();
         }
     }
-    
-    public function checkProjectOwner($projectFileId)
-    {
-        try{
-            
-            $userId =  \Authorizer::getResourceOwnerId();
-            $projectId = $this->repository->skipPresenter()->find($projectFileId)->project_id;
-            return $this->projectRepository->isOwner($projectId,$userId);
-            
-        }catch(\Exception $e){
-            
-            return [
-                'error' => true,
-                'message' => $e->getMessage()
-            ];
-            
-        }
-        
-    }
-    
-    public function checkProjectMember($projectFileId)
-    {
-        try{
-            $userId =  \Authorizer::getResourceOwnerId();
-            $projectId = $this->repository->skipPresenter()->find($projectFileId)->project_id;
-            return $this->projectRepository->hasMember($projectId,$userId);
-        }catch(\Exception $e){
-            return [
-                'error' => true,
-                'message' => $e->getMessage()
-            ];
-        }
-        
-    }
-    
-    public function checkProjectPermissions($projectFileId)
-    {
-        try{
-            if($this->checkProjectOwner($projectFileId) or $this->checkProjectMember($projectFileId)){
-                return true;
-            }
-        }catch(\Exception $e){
-            return [
-                'error' => true,
-                'message' => $e->getMessage()
-            ];
-        }
-        
-        return false;
-    }
-    
+
     public function destroyImage($id)
     {
         try{

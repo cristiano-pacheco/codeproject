@@ -29,7 +29,7 @@ angular.module('app.directives')
 					$(anchor).addClass('disabled');
 					$(anchor).text('loading...');
 					
-					ProjectFile.download({id: null, idFile: $attrs.idFile}, function(data){
+					ProjectFile.download({id: $attrs.idProject, idFile: $attrs.idFile}, function(data){
 						$scope.$emit('salvar-arquivo',data);
 					});
 				};

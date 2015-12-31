@@ -86,7 +86,7 @@ class ProjectService
         return $this->repository->find($id)->members;
     }
     
-    private function checkProjectOwner($projectId)
+    public function checkProjectOwner($projectId)
     {
         $userId =  \Authorizer::getResourceOwnerId();
         return $this->repository->isOwner($projectId,$userId);
@@ -98,7 +98,7 @@ class ProjectService
         return $this->repository->hasMember($projectId,$userId);
     }
     
-    private function checkProjectPermissions($projectId)
+    public function checkProjectPermissions($projectId)
     {
         if($this->checkProjectOwner($projectId) || $this->checkProjectMember($projectId)){
             return true;

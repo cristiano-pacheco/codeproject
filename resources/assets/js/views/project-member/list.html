@@ -1,0 +1,56 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-9 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Listagem de membros de projeto.
+
+					<div class="pull-right col-md-8">
+
+						<form class="form-inline" name="form" method="POST" ng-submit="save()">
+
+							<div class="form-group">
+								<label class="col-md-4 control-label">Name</label>
+								<div class="col-md-6">
+
+									<input type="text" class="form-control" name="member_id" ng-model="userSelected"
+										   typeahead="o as o.name for o in getUsers($viewValue)|limitTo:10"
+										   typeahead-input-formatter="formatName($model)"
+										   typeahead-on-select="selectUser($item)"
+										   typeahead-editable="false"
+										   required>
+
+								</div>
+							</div>
+
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">Salvar</button>
+							</div>
+
+						</form>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="panel-body">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="o in projectMembers">
+								<td>{{o.user.data.name}}</td>
+								<td>
+									<a class="btn btn-default" ng-href="#/project/{{o.project_id}}/member/{{o.user.data.member_id}}/remove">Excluir</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

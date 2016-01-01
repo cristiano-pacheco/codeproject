@@ -4,33 +4,35 @@ namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
 use CodeProject\Http\Controllers\Controller;
-use CodeProject\Repositories\ProjectTaskRepository;
-use CodeProject\Services\ProjectTaskService;
-use CodeProject\Traits\crudControllerTrait;
+use CodeProject\Repositories\ProjectMemberRepository;
+use CodeProject\Services\ProjectMemberService;
 use Illuminate\Support\Facades\Response;
 
-class ProjectTaskController extends Controller
+class ProjectMemberController extends Controller
 {
     /**
-     * @var ProjectTaskRepository
+     * @var ProjectMemberRepository
      */
     private $repository;
 
     /**
-     * @var ProjectTaskService
+     * @var ProjectMemberService
      */
     private $service;
 
     /**
-     * ProjectTaskController constructor.
+     * ProjectMemberController constructor.
      *
-     * @param ProjectTaskRepository $repository
-     * @param ProjectTaskService $service
+     * @param ProjectMemberRepository $repository
+     * @param ProjectMemberService $service
      */
-    public function __construct(ProjectTaskRepository $repository, ProjectTaskService $service)
+    public function __construct(ProjectMemberRepository $repository, ProjectMemberService $service)
     {
         $this->repository = $repository;
         $this->service = $service;
+
+        $this->middleware('check.project.owner',['except'=> ['show','index']]);
+        $this->middleware('check.project.permission',['except'=> ['store','destroy']]);
     }
 
     /**
@@ -65,18 +67,19 @@ class ProjectTaskController extends Controller
      * @param int $idTask
      * @return Response
      */
-    public function show($id, $idTask)
+    public function show($id, $idProjectMember)
     {
-        return $this->service->show($id,$idTask);
+        return $this->service->show($idProjectMember);
     }
-    
-    public function update(Request $request, $id, $noteId)
+
+    /**
+     * Remove the specified resource from sotrage.
+     * @param int $id
+     * @param int $idProjectMember
+     * @return array
+     */
+    public function destroy($id, $idProjectMember)
     {
-        return $this->service->update($request->all(),$noteId);
-    }
-    
-    public function destroy($id, $noteId)
-    {
-        return $this->service->delete($noteId);
+        return $this->service->delete($idProjectMember);
     }
 }

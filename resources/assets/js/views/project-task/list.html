@@ -1,0 +1,55 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-9 col-md-offset-2">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Listagem de tasks de projeto
+
+					<div class="pull-right col-md-8">
+
+						<form class="form-inline" name="form" method="POST" ng-submit="save()">
+
+							<div class="form-group">
+								<label class="col-md-2 control-label">Name</label>
+								<div class="col-md-2">
+									<input type="text" class="form-control" name="name" ng-model="projectTask.name" required>
+								</div>
+							</div>
+							<div class="form-group">
+								<button type="submit" class="btn btn-primary">Salvar</button>
+							</div>
+						</form>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="panel-body">
+
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Start Date</th>
+								<th>Due Date</th>
+								<th>Status</th>
+								<th>Ação</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="o in projectTasks">
+								<td>{{o.name |limitTo:20}}</td>
+								<td>{{o.start_date | dateBr}}</td>
+								<td>{{o.due_date | dateBr}}</td>
+								<td>{{o.status}}</td>
+								<td>
+									<a class="btn btn-default" ng-href="#/project/{{o.project_id}}/task/{{o.id}}/edit">Editar</a>
+									<a class="btn btn-default" ng-href="#/project/{{o.project_id}}/task/{{o.id}}/remove">Excluir</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

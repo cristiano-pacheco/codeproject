@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use CodeProject\Http\Controllers\Controller;
 use CodeProject\Repositories\ProjectFileRepository;
 use CodeProject\Services\ProjectFileService;
+use CodeProject\Services\ProjectService;
 
 class ProjectFileController extends Controller
 {
@@ -22,27 +23,21 @@ class ProjectFileController extends Controller
         return $this->repository->findWhere(['project_id'=>$id]);
     }
     
-    public function show($id)
+    public function show($idProject, $idFile)
     {
-        if($this->service->checkProjectPermissions($id)==false){
-            return ['error'=>'Access Forbidden'];
-        }
-        return $this->repository->find($id);
+        return $this->repository->find($idFile);
     }
     
-    public function showFile($id)
+    public function showFile($idProject, $idFile)
     {
-        if($this->service->checkProjectPermissions($id)==false){
-            return ['error'=>'Access Forbidden'];
-        }
-        
-        $filePath = $this->service->getFilePath($id);
+
+        $filePath = $this->service->getFilePath($idFile);
         $fileContent = file_get_contents($filePath);
         $file64 = base64_encode($fileContent);
         return [
             'file' => $file64,
             'size' => filesize($filePath),
-            'name' => $this->service->getFileName($id)
+            'name' => $this->service->getFileName($idFile)
         ];
     }
     
@@ -70,20 +65,13 @@ class ProjectFileController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $idProject, $idFile)
     {
-        if($this->service->checkProjectOwner($id)==false){
-            return ['error'=>'Access Forbidden'];
-        }
-        return $this->service->update($request->all(),$id);
+        return $this->service->update($request->all(),$idFile);
     }
     
-    public function destroy($id)
+    public function destroy($idProject, $idFile)
     {
-        if($this->service->checkProjectOwner($id)==false){
-            return ['error'=>'Access Forbidden'];
-        }
-        
-        $this->service->destroyImage($id);
+        $this->service->destroyImage($idFile);
     }       
 }

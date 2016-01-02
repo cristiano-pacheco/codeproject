@@ -1,6 +1,7 @@
 <?php
 namespace CodeProject\Services;
 
+use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Validators\ProjectTaskValidator;
 use Prettus\Validator\Exceptions\ValidatorException;
 use CodeProject\Repositories\ProjectTaskRepository;
@@ -10,27 +11,39 @@ class ProjectTaskService
 {
     /**
      * 
-     * @var ClientRepository
+     * @var ProjectTaskRepository
      */
     protected $repository;
     
     /**
      * 
-     * @var ClientValidator
+     * @var ProjectTaskValidator
      */
     protected $validator;
+
+    /**
+     * @var ProjectRepository
+     */
+    protected $projectRepository;
+
+
     
-    public function __construct(ProjectTaskRepository $repository, ProjectTaskValidator $validator)
+    public function __construct(ProjectTaskRepository $repository, ProjectTaskValidator $validator, ProjectRepository $projectRepository)
     {
         $this->repository = $repository;
         $this->validator = $validator;
+        $this->projectRepository = $projectRepository;
+
     }
     
     public function create(array $data)
     {
         try {
             $this->validator->with($data)->passesOrFail();
-            return $this->repository->create($data);
+
+            $projectTask = $this->repository->create($data);
+            return $projectTask;
+
         }catch (ValidatorException $e)
         {
             return [
@@ -56,10 +69,10 @@ class ProjectTaskService
         
     }
     
-    public function show($id,$noteId)
+    public function show($id,$taskId)
     {
         try {
-            return $this->repository->findWhere(['project_id'=>$id,'id'=>$noteId]);
+            return $this->repository->find($taskId);
         } catch (\Exception $e) {
             return [
                 'error' => true,
@@ -68,10 +81,11 @@ class ProjectTaskService
         }    
     }
     
-    public function delete($noteId)
+    public function delete($taskId)
     {
         try {
-            if($this->repository->find($noteId)->delete()){
+            $projectTask = $this->repository->skipPresenter()->find($taskId);
+            if($projectTask->delete()){
                 return [
                     'error' => false,
                     'message' => 'Registro deletado com sucesso.'

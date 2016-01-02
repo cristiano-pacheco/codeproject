@@ -93,7 +93,9 @@
         <script src="{{ asset('build/js/services/client.js') }}"></script>
         <script src="{{ asset('build/js/services/project.js') }}"></script>
         <script src="{{ asset('build/js/services/projectNote.js') }}"></script>
+        <script src="{{ asset('build/js/services/projectTask.js') }}"></script>
         <script src="{{ asset('build/js/services/projectFile.js') }}"></script>
+        <script src="{{ asset('build/js/services/projectMember.js') }}"></script>
         
         <!-- Controllers -->
         <script src="{{ asset('build/js/controllers/login.js') }}"></script>
@@ -117,13 +119,23 @@
         <script src="{{ asset('build/js/controllers/project-note/projectNoteEdit.js') }}"></script>
         <script src="{{ asset('build/js/controllers/project-note/projectNoteRemove.js') }}"></script>
         <script src="{{ asset('build/js/controllers/project-note/projectNoteShow.js') }}"></script>
-        
+
+        <!-- ProjectTask -->
+        <script src="{{ asset('build/js/controllers/project-task/projectTaskList.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/project-task/projectTaskNew.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/project-task/projectTaskEdit.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/project-task/projectTaskRemove.js') }}"></script>
+
+        <!-- ProjectMember -->
+        <script src="{{ asset('build/js/controllers/project-member/projectMemberList.js') }}"></script>
+        <script src="{{ asset('build/js/controllers/project-member/projectMemberRemove.js') }}"></script>
+
+
         <!-- ProjectFile -->
         <script src="{{ asset('build/js/controllers/project-file/projectFileList.js') }}"></script>
         <script src="{{ asset('build/js/controllers/project-file/projectFileNew.js') }}"></script>
         <script src="{{ asset('build/js/controllers/project-file/projectFileEdit.js') }}"></script>
         <script src="{{ asset('build/js/controllers/project-file/projectFileRemove.js') }}"></script>
-        <script src="{{ asset('build/js/controllers/project-file/projectFileShow.js') }}"></script>
         
     @else
         <script src="{{elixir('js/all.js')}}"></script>

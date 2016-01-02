@@ -23,17 +23,19 @@ angular.module('app.directives')
 			
 		}, 
 		controller: ['$scope','$element','$attrs',function($scope, $element,$attrs){
+
 			$scope.downloadFile = function(){
-				$scope.downloadFile = function(){
-					var anchor = $element.children()[0];
-					$(anchor).addClass('disabled');
-					$(anchor).text('loading...');
-					
-					ProjectFile.download({id: $attrs.idProject, idFile: $attrs.idFile}, function(data){
-						$scope.$emit('salvar-arquivo',data);
-					});
-				};
+
+				var anchor = $element.children()[0];
+				$(anchor).addClass('disabled');
+				$(anchor).text('loading...');
+
+				ProjectFile.download({id: null, idFile: $attrs.idFile}, function(data){
+					$scope.$emit('salvar-arquivo',data);
+				});
+
 			};
+
 		}]
 	}
 }]);
